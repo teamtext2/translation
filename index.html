@@ -1,9 +1,23 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Text2.click - Dịch thuật thông minh</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="theme-color" content="#667eea">
+    <title>Text2 - Translate | LLM </title>
+    <meta name="description" content="Text2 - Translate is a smart translation tool powered by AI. Translate between Vietnamese and English with context-aware accuracy.">
+    <meta name="keywords" content="Text2, translate, translation, Vietnamese to English, English to Vietnamese, AI translation, smart translator">
+    <meta name="author" content="Text2">
+    <meta property="og:title" content="Text2 - Translate">
+    <meta property="og:description" content="Smart translation tool powered by AI. Translate between Vietnamese and English with context-aware accuracy.">
+    <meta property="og:url" content="https://translate.text2.click">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://translate.text2.click/favicon.ico">
+    <link rel="canonical" href="https://translate.text2.click">
+    <link rel="icon" href="https://translate.text2.click/favicon.ico" type="image/x-icon">
 <!-- Google tag (gtag.js) - GA4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-ABCDEFG123"></script>
 <script>
@@ -24,6 +38,7 @@
             font-family: 'Inter', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
+            min-height: calc(var(--vh, 1vh) * 100);
             margin: 0;
             padding: 20px;
             box-sizing: border-box;
@@ -131,6 +146,26 @@
         .text-area.readonly {
             background: #f8fafc;
             color: #64748b;
+        }
+        
+        /* Mobile-specific focus styles */
+        @media (max-width: 768px) {
+            .text-area:focus {
+                box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+            }
+            
+            /* Improve touch targets */
+            button, .direction-option, .swap-button {
+                -webkit-tap-highlight-color: transparent;
+            }
+            
+            /* Prevent text selection on buttons */
+            .translate-button, .swap-button, .direction-option {
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+            }
         }
         
         .char-counter {
@@ -353,21 +388,183 @@
         }
         
         @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .main-container {
+                border-radius: 16px;
+                margin: 0;
+                max-width: 100%;
+            }
+            
+            .header {
+                padding: 20px 16px;
+            }
+            
+            .logo-section {
+                flex-direction: column;
+                gap: 12px;
+                margin-bottom: 12px;
+            }
+            
+            .logo {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .brand-name {
+                font-size: 24px;
+            }
+            
+            .subtitle {
+                font-size: 14px;
+            }
+            
+            .content {
+                padding: 20px 16px;
+            }
+            
             .translation-grid {
                 grid-template-columns: 1fr;
                 gap: 16px;
             }
             
-            .swap-button {
-                margin: 16px auto;
+            .text-area {
+                min-height: 150px;
+                padding: 16px;
+                font-size: 16px;
+                border-radius: 12px;
             }
             
-            .content {
-                padding: 24px;
+            .text-area-label {
+                font-size: 13px;
+                margin-bottom: 8px;
+            }
+            
+            .swap-button {
+                width: 56px;
+                height: 56px;
+                margin: 8px auto;
+                position: relative;
+                z-index: 10;
+            }
+            
+            .swap-icon {
+                width: 24px;
+                height: 24px;
+            }
+            
+            .controls-section {
+                gap: 16px;
+                margin-bottom: 24px;
+            }
+            
+            .direction-selector {
+                flex-direction: column;
+                gap: 8px;
+                padding: 8px;
+            }
+            
+            .direction-option {
+                padding: 16px 12px;
+                font-size: 13px;
+                border-radius: 10px;
+                min-height: 48px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            .translate-button {
+                padding: 18px 24px;
+                font-size: 16px;
+                border-radius: 12px;
+                min-height: 56px;
+                touch-action: manipulation;
+            }
+            
+            .char-counter {
+                bottom: 8px;
+                right: 12px;
+                font-size: 11px;
+                padding: 3px 6px;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+                gap: 16px;
+                margin-top: 24px;
+                padding-top: 24px;
+            }
+            
+            .feature {
+                padding: 16px;
+                border-radius: 10px;
+            }
+            
+            .feature-icon {
+                width: 28px;
+                height: 28px;
+                margin-bottom: 10px;
+            }
+            
+            .feature-title {
+                font-size: 14px;
+                margin-bottom: 6px;
+            }
+            
+            .feature-desc {
+                font-size: 13px;
+                line-height: 1.4;
+            }
+            
+            .error-message {
+                padding: 10px 12px;
+                font-size: 13px;
+                border-radius: 8px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 8px;
             }
             
             .header {
-                padding: 24px;
+                padding: 16px 12px;
+            }
+            
+            .content {
+                padding: 16px 12px;
+            }
+            
+            .text-area {
+                min-height: 120px;
+                padding: 14px;
+                font-size: 15px;
+            }
+            
+            .translate-button {
+                padding: 16px 20px;
+                font-size: 15px;
+                min-height: 52px;
+            }
+            
+            .direction-option {
+                padding: 14px 10px;
+                font-size: 12px;
+                min-height: 44px;
+            }
+            
+            .swap-button {
+                width: 52px;
+                height: 52px;
+            }
+            
+            .swap-icon {
+                width: 22px;
+                height: 22px;
             }
         }
     </style>
@@ -377,10 +574,10 @@
         <!-- Header with Logo -->
         <div class="header">
             <div class="logo-section">
-                <img src="https://text2.click/favicon.ico" alt="Text2.click Logo" class="logo">
+                <img src="https://translate.text2.click/favicon.ico" alt="Text2.click Logo" class="logo">
                 <div>
-                    <div class="brand-name">Text2.click</div>
-                    <div class="subtitle">Dịch thuật thông minh</div>
+                    <div class="brand-name">Text2</div>
+                    <div class="subtitle">Smart Translation Tool</div>
                 </div>
             </div>
         </div>
@@ -395,14 +592,14 @@
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path>
                         </svg>
-                        Văn bản gốc
+                        Original Text
                     </div>
-                    <textarea id="inputText" class="text-area" placeholder="Nhập văn bản cần dịch vào đây..."></textarea>
-                    <div id="charCount" class="char-counter">0/500 ký tự</div>
+                    <textarea id="inputText" class="text-area" placeholder="Enter text to translate here..."></textarea>
+                    <div id="charCount" class="char-counter">0/500 characters</div>
                 </div>
 
                 <!-- Swap Button -->
-                <button id="swapButton" class="swap-button" title="Đổi hướng dịch">
+                <button id="swapButton" class="swap-button" title="Swap translation direction">
                     <svg class="swap-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path>
                     </svg>
@@ -414,9 +611,9 @@
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
-                        Kết quả dịch
+                        Translation Result
                     </div>
-                    <textarea id="outputText" class="text-area readonly" readonly placeholder="Kết quả dịch sẽ hiển thị ở đây..."></textarea>
+                    <textarea id="outputText" class="text-area readonly" readonly placeholder="Translation result will appear here..."></textarea>
                 </div>
             </div>
 
@@ -424,8 +621,8 @@
             <div class="controls-section">
                 <!-- Direction Selector -->
                 <div class="direction-selector">
-                    <button id="viEnOption" class="direction-option active">🇻🇳 Tiếng Việt → 🇺🇸 Tiếng Anh</button>
-                    <button id="enViOption" class="direction-option">🇺🇸 Tiếng Anh → 🇻🇳 Tiếng Việt</button>
+                    <button id="viEnOption" class="direction-option active">🇻🇳 Vietnamese → 🇺🇸 English</button>
+                    <button id="enViOption" class="direction-option">🇺🇸 English → 🇻🇳 Vietnamese</button>
                 </div>
 
                 <!-- Translate Button -->
@@ -433,7 +630,7 @@
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                     </svg>
-                    <span id="buttonText">Dịch ngay</span>
+                    <span id="buttonText">Translate Now</span>
                     <div id="loadingSpinner" class="loading-spinner"></div>
                 </button>
 
@@ -447,8 +644,8 @@
                     <svg class="feature-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                     </svg>
-                    <div class="feature-title">Dịch siêu tốc</div>
-                    <div class="feature-desc">Chúng tôi đang xây dựng phần mềm dịch thuật dựa trên ngữ cảnh với sự hỗ trợ của mô hình ngôn ngữ LLM</div>
+                    <div class="feature-title">Ultra-Fast Translation</div>
+                    <div class="feature-desc">We are building context-aware translation software powered by LLM language models</div>
                 </div>
             </div>
         </div>
@@ -479,10 +676,10 @@
             const currentLength = inputText.value.length;
             if (currentLength > MAX_CHARS) {
                 inputText.value = inputText.value.substring(0, MAX_CHARS);
-                charCount.textContent = `${MAX_CHARS}/${MAX_CHARS} ký tự (đã đạt giới hạn)`;
+                charCount.textContent = `${MAX_CHARS}/${MAX_CHARS} characters (limit reached)`;
                 charCount.classList.add('limit-reached');
             } else {
-                charCount.textContent = `${currentLength}/${MAX_CHARS} ký tự`;
+                charCount.textContent = `${currentLength}/${MAX_CHARS} characters`;
                 charCount.classList.remove('limit-reached');
             }
         });
@@ -536,18 +733,18 @@
             const textToTranslate = inputText.value.trim();
             
             if (!textToTranslate) {
-                showError('Vui lòng nhập văn bản bạn muốn dịch.');
+                showError('Please enter text you want to translate.');
                 return;
             }
 
             if (textToTranslate.length > MAX_CHARS) {
-                showError(`Văn bản quá dài. Vui lòng nhập tối đa ${MAX_CHARS} ký tự.`);
+                showError(`Text is too long. Please enter maximum ${MAX_CHARS} characters.`);
                 return;
             }
 
             // Show loading state
             loadingSpinner.style.display = 'block';
-            buttonText.textContent = 'Đang dịch...';
+            buttonText.textContent = 'Translating...';
             translateButton.disabled = true;
             outputText.value = '';
 
@@ -582,16 +779,16 @@
                     const translatedText = result.candidates[0].content.parts[0].text;
                     outputText.value = translatedText;
                 } else {
-                    showError('Không thể lấy kết quả dịch. Vui lòng thử lại.');
+                    showError('Unable to get translation result. Please try again.');
                 }
 
             } catch (error) {
-                console.error('Lỗi khi gọi API dịch thuật:', error);
-                showError(`Đã xảy ra lỗi: ${error.message}. Vui lòng thử lại.`);
+                console.error('Error calling translation API:', error);
+                showError(`An error occurred: ${error.message}. Please try again.`);
             } finally {
                 // Reset loading state
                 loadingSpinner.style.display = 'none';
-                buttonText.textContent = 'Dịch ngay';
+                buttonText.textContent = 'Translate Now';
                 translateButton.disabled = false;
             }
         });
@@ -601,6 +798,71 @@
             if (e.key === 'Enter' && e.ctrlKey) {
                 translateButton.click();
             }
+        });
+
+        // Mobile optimizations
+        function isMobile() {
+            return window.innerWidth <= 768;
+        }
+
+        // Prevent zoom on double tap for mobile
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function (event) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+
+        // Better touch handling for buttons
+        if (isMobile()) {
+            // Add touch feedback for buttons
+            const touchButtons = [translateButton, swapButton, viEnOption, enViOption];
+            touchButtons.forEach(button => {
+                button.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.95)';
+                });
+                
+                button.addEventListener('touchend', function() {
+                    this.style.transform = '';
+                });
+                
+                button.addEventListener('touchcancel', function() {
+                    this.style.transform = '';
+                });
+            });
+
+            // Auto-focus input on mobile for better UX
+            inputText.addEventListener('focus', function() {
+                setTimeout(() => {
+                    this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 300);
+            });
+
+            // Prevent textarea zoom on iOS
+            inputText.addEventListener('focus', function() {
+                if (isMobile()) {
+                    this.style.fontSize = '16px';
+                }
+            });
+
+            // Optimize for mobile keyboard
+            window.addEventListener('resize', function() {
+                if (isMobile()) {
+                    const vh = window.innerHeight * 0.01;
+                    document.documentElement.style.setProperty('--vh', `${vh}px`);
+                }
+            });
+        }
+
+        // Handle orientation change
+        window.addEventListener('orientationchange', function() {
+            setTimeout(() => {
+                if (isMobile()) {
+                    inputText.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }, 500);
         });
     </script>
 </body>
