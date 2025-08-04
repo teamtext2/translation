@@ -121,6 +121,36 @@
             font-size: 14px;
         }
         
+        .copy-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 8px;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+            color: white;
+            margin-left: auto;
+        }
+        
+        .copy-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+        
+        .copy-button:active {
+            transform: scale(0.95);
+        }
+        
+        .copy-button.copied {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+        }
+        
         .text-area {
             width: 100%;
             min-height: 200px;
@@ -442,6 +472,12 @@
                 margin-bottom: 8px;
             }
             
+            .copy-button {
+                width: 36px;
+                height: 36px;
+                border-radius: 10px;
+            }
+            
             .swap-button {
                 width: 56px;
                 height: 56px;
@@ -612,6 +648,11 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                         Translation Result
+                        <button id="copyButton" class="copy-button" title="Copy translation result">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                            </svg>
+                        </button>
                     </div>
                     <textarea id="outputText" class="text-area readonly" readonly placeholder="Translation result will appear here..."></textarea>
                 </div>
@@ -663,10 +704,70 @@
         const swapButton = document.getElementById('swapButton');
         const viEnOption = document.getElementById('viEnOption');
         const enViOption = document.getElementById('enViOption');
+        const copyButton = document.getElementById('copyButton');
 
         // API Key
-        const GEMINI_API_KEY = "AIzaSyB9k9gwZl7iHSyYxbhKjAtpkooS_nriqBg";
+        const TOGETHER_API_KEY = "4cf2ed88b3d39e9f196ab88cefa8bf0bc21d698ce9cdf8f20cf80a596247378c";
         const MAX_CHARS = 500;
+
+        // Copy functionality
+        copyButton.addEventListener('click', async () => {
+            const textToCopy = outputText.value.trim();
+            
+            if (!textToCopy) {
+                showError('No text to copy. Please translate something first.');
+                return;
+            }
+
+            try {
+                await navigator.clipboard.writeText(textToCopy);
+                
+                // Visual feedback
+                copyButton.classList.add('copied');
+                copyButton.innerHTML = `
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                `;
+                
+                // Reset after 2 seconds
+                setTimeout(() => {
+                    copyButton.classList.remove('copied');
+                    copyButton.innerHTML = `
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                        </svg>
+                    `;
+                }, 2000);
+                
+            } catch (err) {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = textToCopy;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                // Visual feedback
+                copyButton.classList.add('copied');
+                copyButton.innerHTML = `
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                `;
+                
+                // Reset after 2 seconds
+                setTimeout(() => {
+                    copyButton.classList.remove('copied');
+                    copyButton.innerHTML = `
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                        </svg>
+                    `;
+                }, 2000);
+            }
+        });
 
         // Translation direction state
         let currentDirection = 'vi-en';
@@ -756,27 +857,42 @@
             }
 
             try {
-                const chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
-                const payload = { contents: chatHistory };
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
+                const payload = {
+                    model: "deepseek-ai/DeepSeek-R1-Distill-Llama-70B-free",
+                    messages: [
+                        {
+                            role: "user",
+                            content: prompt
+                        }
+                    ]
+                };
 
-                const response = await fetch(apiUrl, {
+                const response = await fetch("https://api.together.xyz/v1/chat/completions", {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${TOGETHER_API_KEY}`
+                    },
                     body: JSON.stringify(payload)
                 });
 
                 if (!response.ok) {
                     const errorData = await response.json();
-                    throw new Error(`Lỗi API: ${errorData.error.message || response.statusText}`);
+                    throw new Error(`API Error: ${errorData.error?.message || response.statusText}`);
                 }
 
                 const result = await response.json();
 
-                if (result.candidates && result.candidates.length > 0 &&
-                    result.candidates[0].content && result.candidates[0].content.parts &&
-                    result.candidates[0].content.parts.length > 0) {
-                    const translatedText = result.candidates[0].content.parts[0].text;
+                if (result.choices && result.choices.length > 0 &&
+                    result.choices[0].message && result.choices[0].message.content) {
+                    let translatedText = result.choices[0].message.content;
+                    
+                    // Remove content inside <think></think> tags
+                    translatedText = translatedText.replace(/<think>.*?<\/think>/gs, '');
+                    
+                    // Clean up any extra whitespace that might be left
+                    translatedText = translatedText.replace(/\n\s*\n/g, '\n').trim();
+                    
                     outputText.value = translatedText;
                 } else {
                     showError('Unable to get translation result. Please try again.');
@@ -818,7 +934,7 @@
         // Better touch handling for buttons
         if (isMobile()) {
             // Add touch feedback for buttons
-            const touchButtons = [translateButton, swapButton, viEnOption, enViOption];
+            const touchButtons = [translateButton, swapButton, viEnOption, enViOption, copyButton];
             touchButtons.forEach(button => {
                 button.addEventListener('touchstart', function() {
                     this.style.transform = 'scale(0.95)';
