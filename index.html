@@ -919,6 +919,12 @@
                     // Remove content inside <think></think> tags
                     translatedText = translatedText.replace(/<think>.*?<\/think>/gs, '');
                     
+                    // Extract content inside quotes
+                    const quoteMatch = translatedText.match(/"([^"]*)"/);
+                    if (quoteMatch) {
+                        translatedText = quoteMatch[1];
+                    }
+                    
                     // Clean up any extra whitespace that might be left
                     translatedText = translatedText.replace(/\n\s*\n/g, '\n').trim();
                     
