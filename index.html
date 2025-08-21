@@ -883,7 +883,7 @@
             if (currentDirection === "vi-en") {
                 prompt = `dịch văn bản này sang tiếng anh như người mỹ viết, dựa theo ngữ cảnh và phong cách ngôn ngữ nói chuyện thông thường và chỉ cần phản hồi kết quả: ${textToTranslate}`;
             } else {
-                prompt = `dịch văn bản này sang tiếng Việt nam như người Việt nam viết và chỉ cần phản hồi kết quả: ${textToTranslate}`;
+                prompt = `dịch văn bản này sang ngôn ngữ đang trò chuyện, với kiểu dịch dự theo ngữ cảnh và cách nói chuyện hằng ngày. Chỉ cần phản hồi kết quả: ${textToTranslate}`;
             }
 
             try {
@@ -1018,5 +1018,6 @@
     </script>
 </body>
 </html>
+
 
 
