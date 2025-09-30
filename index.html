@@ -87,40 +87,42 @@
         
         .header {
             background: linear-gradient(180deg, #0f1117 0%, #111827 100%);
-            padding: 32px;
-            text-align: center;
+            padding: 18px 24px;
             color: var(--text-primary);
             border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
-        
+
+        /* Left-aligned logo area to match supplied screenshot */
         .logo-section {
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 16px;
-            margin-bottom: 16px;
+            gap: 12px;
         }
         
         .logo {
-            width: 48px;
-            height: 48px;
+            width: 56px;
+            height: 56px;
             border-radius: 12px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+            flex-shrink: 0;
         }
-        
+
         .brand-name {
-            font-size: 28px;
+            font-size: 20px;
             font-weight: 800;
-            letter-spacing: -0.5px;
+            letter-spacing: 0.6px;
             color: var(--text-primary);
+            text-transform: uppercase;
         }
-        
-        .subtitle {
-            font-size: 16px;
-            font-weight: 400;
+
+        /* If a small tagline is needed to the right, keep it subtle */
+        .header-right {
             opacity: 0.9;
-            margin-top: 8px;
             color: var(--text-muted);
+            font-size: 13px;
         }
         
         .content {
@@ -466,22 +468,17 @@
             }
             
             .logo-section {
-                flex-direction: column;
-                gap: 12px;
-                margin-bottom: 12px;
+                flex-direction: row;
+                gap: 10px;
             }
-            
+
             .logo {
-                width: 40px;
-                height: 40px;
+                width: 44px;
+                height: 44px;
             }
-            
+
             .brand-name {
-                font-size: 24px;
-            }
-            
-            .subtitle {
-                font-size: 14px;
+                font-size: 16px;
             }
             
             .content {
@@ -645,10 +642,12 @@
             <div class="logo-section">
                 <img src="https://translate.text2.click/favicon.ico" alt="Text2.click Logo" class="logo">
                 <div>
-                    <div class="brand-name">Text2</div>
-                    <div class="subtitle">Smart Translation Tool</div>
+                    <div class="brand-name">Text2 Translate</div>
                 </div>
             </div>
+
+            <!-- Right side of header: reserved for small controls or status -->
+            <div class="header-right">&nbsp;</div>
         </div>
 
         <!-- Main Content -->
