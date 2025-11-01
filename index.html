@@ -423,7 +423,7 @@
             
             const targetLangText = targetLanguageSelect.options[targetLanguageSelect.selectedIndex].text;
             
-            const prompt = `dịch văn bản này từ ${sourceLangText} sang ${targetLangText} với kiểu dịch dựa theo ngữ cảnh với ngôn ngữ sinh hoạt và chỉ phản hồi kết quả, dịch: (${textToTranslate})`;
+            const prompt = `dịch văn bản này từ ${sourceLangText} sang ${targetLangText} với kiểu dịch dựa theo ngữ cảnh với ngôn ngữ sinh hoạt và chỉ phản hồi kết quả, không giải thích gì thêm, chỉ có văn bản đã dịch, dịch: (${textToTranslate})`;
 
             try {
                 let translatedText = await sendMessage(prompt);
