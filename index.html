@@ -262,7 +262,7 @@
 
 
         // API Key
-        const workerUrl = "https://text2llmgroq.text2team.workers.dev/"; 
+        const workerUrl = "https://cloudflare-llm.text2team.workers.dev"; 
         const MAX_CHARS = 500;
 
         // Copy functionality (Giữ nguyên)
@@ -370,16 +370,18 @@
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        message: msg
+                        prompt: msg
                     })
                 });
 
                 if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+                    const errText = await response.text();
+                    throw new Error(`HTTP error ${response.status}: ${errText}`);
                 }
 
                 const data = await response.json();
-                return data?.choices?.[0]?.message?.content || JSON.stringify(data, null, 2);
+                const text = data?.reply?.response || data?.reply || "Không có phản hồi từ AI";
+                return text;
             } catch (err) {
                 console.error("Error:", err);
                 throw new Error(`API call failed: ${err.message}`);
