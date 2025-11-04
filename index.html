@@ -11,7 +11,7 @@
     <meta name="google" content="notranslate"> 
     <title>Text2 - Translate | LLM </title>
     
-    <!-- Meta tags SEO và OG (Giữ nguyên) -->
+    <!-- SEO and OG Meta tags -->
     <meta name="description" content="Text2 - Translate is a smart translation tool powered by AI. Translate between Vietnamese and English with context-aware accuracy.">
     <link rel="manifest" href="/site.webmanifest">
     <link rel="icon" type="image/png" sizes="32x32" href="https://translate.text2.click/favicon-32x32.png">
@@ -44,7 +44,7 @@
     <!-- Inter font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- CSS Tối ưu hóa "App-like" -->
+    <!-- CSS optimized for "App-like" experience -->
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -68,31 +68,31 @@
         /* THIS CSS IS NO LONGER USED FOR BUTTONS, BUT CAN BE REUSED FOR SELECT */
         .language-select {
             @apply w-full flex-1 px-4 py-3 rounded-lg text-sm md:text-base font-medium text-gray-300 bg-gray-800/60 border border-gray-700/50 hover:bg-gray-700/50 transition-all cursor-pointer text-center appearance-none;
-            /* Tùy chỉnh mũi tên dropdown */
+            /* Custom dropdown arrow */
             background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
             background-position: right 0.75rem center;
             background-repeat: no-repeat;
             background-size: 1.25em 1.25em;
-            padding-right: 2.5rem; /* Thêm padding để mũi tên không đè lên chữ */
+            padding-right: 2.5rem; /* Add padding so arrow doesn't overlap text */
         }
         .language-select:focus {
             @apply ring-2 ring-blue-500/50 border-blue-600 outline-none;
         }
 
 
-        /* Bộ đếm ký tự (JS sẽ thêm class 'limit-reached') */
+        /* Character counter (JS will add 'limit-reached' class) */
         .char-counter.limit-reached {
             @apply !text-red-400 !bg-red-900/30;
         }
 
-        /* Ngăn iOS tự động zoom khi focus vào textarea */
+        /* Prevent iOS auto-zoom when focusing on textarea */
         @media (max-width: 768px) {
             textarea:focus, input:focus, select:focus {
                 font-size: 16px !important;
             }
         }
         
-        /* Tùy chỉnh thanh cuộn cho cảm giác "app" hơn */
+        /* Customize scrollbar for more "app-like" feel */
         .main-content-scrollable::-webkit-scrollbar {
             width: 6px;
         }
@@ -106,10 +106,10 @@
     </style>
 </head>
 
-<!-- Bố cục flex-col full-height cho body -->
+<!-- Full-height flex-col layout for body -->
 <body class="bg-gray-950 text-gray-200 flex flex-col h-[calc(var(--vh,1vh)*100)]">
 
-    <!-- Header (App Bar) - Cố định -->
+    <!-- Header (App Bar) - Fixed -->
     <div class="header flex justify-between items-center p-4 md:p-5 border-b border-gray-700/50 bg-gray-900/80 backdrop-blur-lg flex-shrink-0 z-10 shadow-md">
         <div class="logo-section flex items-center gap-3">
             <img src="https://translate.text2.click/favicon.ico" alt="Text2.click Logo" class="logo w-9 h-9 md:w-10 md:h-10 rounded-lg shadow-lg">
@@ -120,79 +120,79 @@
         <div class="header-right text-xs text-gray-500 opacity-90">&nbsp;</div>
     </div>
 
-    <!-- Nội dung chính (Scrollable) -->
+    <!-- Main Content (Scrollable) -->
     <div class="main-content-scrollable flex-1 overflow-y-auto p-4 md:p-8" style="animation: slideUp 0.6s ease-out;">
         
-        <!-- Lưới Dịch -->
+        <!-- Translation Grid -->
         <div class="translation-grid grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 items-start">
             
-            <!-- Cột Input -->
+            <!-- Input Column -->
             <div class="text-area-container relative flex flex-col gap-3 h-full">
                 <label for="inputText" class="text-area-label flex justify-between items-center text-sm font-semibold text-gray-300">
                     <span id="sourceLanguageLabel" class="flex items-center gap-2">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path></svg>
-                        <!-- THAY ĐỔI: Thêm span ID để cập nhật động -->
-                        <span id="sourceLanguageName">Tiếng Việt</span>
+                        <!-- CHANGE: Add span ID for dynamic update -->
+                        <span id="sourceLanguageName">Vietnamese</span>
                     </span>
                 </label>
-                <textarea id="inputText" class="text-area w-full p-4 bg-gray-900/60 border-2 border-gray-700/80 rounded-xl text-gray-100 text-base leading-relaxed resize-none focus:outline-none focus:ring-4 focus:ring-blue-500/30 focus:border-blue-500 transition-all duration-300 flex-grow min-h-[200px] md:min-h-[300px]" placeholder="Nhập văn bản để dịch..."></textarea>
+                <textarea id="inputText" class="text-area w-full p-4 bg-gray-900/60 border-2 border-gray-700/80 rounded-xl text-gray-100 text-base leading-relaxed resize-none focus:outline-none focus:ring-4 focus:ring-blue-500/30 focus:border-blue-500 transition-all duration-300 flex-grow min-h-[200px] md:min-h-[300px]" placeholder="Enter text to translate..."></textarea>
                 <div id="charCount" class="char-counter absolute bottom-3 left-4 text-xs text-gray-500 bg-gray-800/80 px-2 py-1 rounded-md border border-gray-700/50 transition-colors">0/500 characters</div>
             </div>
 
-            <!-- Cột Output -->
+            <!-- Output Column -->
             <div class="text-area-container relative flex flex-col gap-3 h-full">
                 <label for="outputText" class="text-area-label flex justify-between items-center text-sm font-semibold text-gray-300">
                     <span id="targetLanguageLabel" class="flex items-center gap-2">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        <!-- THAY ĐỔI: Thêm span ID để cập nhật động -->
+                        <!-- CHANGE: Add span ID for dynamic update -->
                         <span id="targetLanguageName">English</span>
                     </span>
-                    <button id="copyButton" class="copy-button flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md hover:scale-105 active:scale-95 transition-all" title="Copy kết quả">
+                    <button id="copyButton" class="copy-button flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md hover:scale-105 active:scale-95 transition-all" title="Copy result">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
                     </button>
                 </label>
-                <textarea id="outputText" class="text-area w-full p-4 bg-gray-800/70 border-2 border-gray-700/80 rounded-xl text-gray-300 text-base leading-relaxed resize-none focus:outline-none flex-grow min-h-[200px] md:min-h-[300px]" readonly placeholder="Kết quả dịch sẽ xuất hiện ở đây..."></textarea>
+                <textarea id="outputText" class="text-area w-full p-4 bg-gray-800/70 border-2 border-gray-700/80 rounded-xl text-gray-300 text-base leading-relaxed resize-none focus:outline-none flex-grow min-h-[200px] md:min-h-[300px]" readonly placeholder="Translation result will appear here..."></textarea>
             </div>
         </div>
 
-        <!-- Khu vực Điều khiển -->
+        <!-- Controls Section -->
         <div class="controls-section flex flex-col gap-4 md:gap-5 mt-6 md:mt-8">
             
             <div class="flex flex-col sm:flex-row items-center gap-3">
-                <!-- THAY ĐỔI: Chọn Ngôn ngữ bằng Dropdown -->
+                <!-- CHANGE: Language Selection with Dropdowns -->
                 <div class="direction-selector flex-grow w-full flex flex-col md:flex-row gap-3 items-center p-1 bg-gray-900/30 rounded-xl">
-                    <!-- Dropdown Ngôn ngữ Nguồn -->
+                    <!-- Source Language Dropdown -->
                     <select id="sourceLanguageSelect" class="language-select">
-                        <!-- JS sẽ chèn các option vào đây -->
+                        <!-- JS will insert options here -->
                     </select>
                     
-                    <!-- Nút Swap (Giữ nguyên) -->
-                    <button id="swapButton" class="swap-button flex-shrink-0 flex items-center justify-center w-full sm:w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg text-white shadow-lg hover:scale-110 active:scale-95 transition-all" title="Đảo ngược ngôn ngữ">
+                    <!-- Swap Button (Keep unchanged) -->
+                    <button id="swapButton" class="swap-button flex-shrink-0 flex items-center justify-center w-full sm:w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg text-white shadow-lg hover:scale-110 active:scale-95 transition-all" title="Swap languages">
                         <svg class="swap-icon w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
                     </button>
 
-                    <!-- Dropdown Ngôn ngữ Đích -->
+                    <!-- Target Language Dropdown -->
                     <select id="targetLanguageSelect" class="language-select">
-                        <!-- JS sẽ chèn các option vào đây -->
+                        <!-- JS will insert options here -->
                     </select>
                 </div>
 
             </div>
 
-            <!-- Thông báo Lỗi (Giữ nguyên) -->
+            <!-- Error Message (Keep unchanged) -->
             <div id="errorMessage" class="error-message p-3 bg-red-900/40 border border-red-700/50 text-red-300 text-sm rounded-lg text-center hidden"></div>
         </div>
 
-        <!-- Tính năng (Giữ nguyên) -->
+        <!-- Features (Keep unchanged) -->
         
-        <!-- Thêm một khoảng đệm an toàn ở cuối -->
+        <!-- Add safe padding at the end -->
         <div class="h-8 md:h-12 flex-shrink-0"></div>
 
     </div>
 
-    <!-- Thanh Action Bar (Footer) - Cố định -->
+    <!-- Action Bar Footer - Fixed -->
     <div class="footer-action-bar p-3 md:p-4 bg-gray-900/80 backdrop-blur-lg border-t border-gray-700/50 flex-shrink-0 z-10 shadow-inner">
-        <!-- Nút Dịch (Giữ nguyên) -->
+        <!-- Translate Button (Keep unchanged) -->
         <button id="translateButton" class="translate-button flex items-center justify-center gap-3 w-full h-12 md:h-14 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:scale-[0.99] transition-all disabled:opacity-60 disabled:cursor-not-allowed disabled:transform-none">
             <span id="translateIcon" class="flex items-center justify-center">
                 <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
@@ -203,7 +203,7 @@
     </div>
 
 
-    <!-- JAVASCRIPT (ĐÃ CẬP NHẬT LOGIC) -->
+    <!-- JAVASCRIPT (UPDATED LOGIC) -->
     <script>
         // DOM Elements
         const inputText = document.getElementById('inputText');
@@ -219,45 +219,45 @@
         const sourceLanguageLabel = document.getElementById('sourceLanguageLabel');
         const targetLanguageLabel = document.getElementById('targetLanguageLabel');
         
-        // THAY ĐỔI: DOM elements mới
+        // CHANGE: New DOM elements
         const sourceLanguageSelect = document.getElementById('sourceLanguageSelect');
         const targetLanguageSelect = document.getElementById('targetLanguageSelect');
         const sourceLanguageName = document.getElementById('sourceLanguageName');
         const targetLanguageName = document.getElementById('targetLanguageName');
 
-        // THAY ĐỔI: Danh sách ngôn ngữ (có thể mở rộng)
+        // CHANGE: List of languages (expandable)
         const supportedLanguages = {
-            'auto': 'Phát hiện ngôn ngữ',
-            'vi': 'Tiếng Việt',
-            'en': 'Tiếng Anh',
-            'zh': 'Tiếng Trung (Giản thể)',
-            'ja': 'Tiếng Nhật',
-            'ko': 'Tiếng Hàn',
-            'fr': 'Tiếng Pháp',
-            'de': 'Tiếng Đức',
-            'es': 'Tiếng Tây Ban Nha',
-            'ru': 'Tiếng Nga',
-            'pt': 'Tiếng Bồ Đào Nha',
-            'it': 'Tiếng Ý',
-            'hi': 'Tiếng Hindi',
-            'ar': 'Tiếng Ả Rập',
-            'tr': 'Tiếng Thổ Nhĩ Kỳ',
-            'nl': 'Tiếng Hà Lan',
-            'pl': 'Tiếng Ba Lan',
-            'sv': 'Tiếng Thụy Điển',
-            'th': 'Tiếng Thái',
-            'id': 'Tiếng Indonesia',
-            'ms': 'Tiếng Mã Lai',
-            'el': 'Tiếng Hy Lạp',
-            'cs': 'Tiếng Séc',
-            'da': 'Tiếng Đan Mạch',
-            'fi': 'Tiếng Phần Lan',
-            'hu': 'Tiếng Hungary',
-            'no': 'Tiếng Na Uy',
-            'ro': 'Tiếng Romania',
-            'sk': 'Tiếng Slovak',
-            'uk': 'Tiếng Ukraina',
-            'he': 'Tiếng Do Thái',
+            'auto': 'Auto Detect',
+            'vi': 'Vietnamese',
+            'en': 'English',
+            'zh': 'Chinese (Simplified)',
+            'ja': 'Japanese',
+            'ko': 'Korean',
+            'fr': 'French',
+            'de': 'German',
+            'es': 'Spanish',
+            'ru': 'Russian',
+            'pt': 'Portuguese',
+            'it': 'Italian',
+            'hi': 'Hindi',
+            'ar': 'Arabic',
+            'tr': 'Turkish',
+            'nl': 'Dutch',
+            'pl': 'Polish',
+            'sv': 'Swedish',
+            'th': 'Thai',
+            'id': 'Indonesian',
+            'ms': 'Malay',
+            'el': 'Greek',
+            'cs': 'Czech',
+            'da': 'Danish',
+            'fi': 'Finnish',
+            'hu': 'Hungarian',
+            'no': 'Norwegian',
+            'ro': 'Romanian',
+            'sk': 'Slovak',
+            'uk': 'Ukrainian',
+            'he': 'Hebrew',
         };
 
 
@@ -265,7 +265,7 @@
         const workerUrl = "https://cloudflare-llm.text2team.workers.dev"; 
         const MAX_CHARS = 500;
 
-        // Copy functionality (Giữ nguyên)
+        // Copy functionality (Keep unchanged)
         copyButton.addEventListener('click', async () => {
             const textToCopy = outputText.value.trim();
             if (!textToCopy) {
@@ -297,7 +297,7 @@
             }
         });
 
-        // THAY ĐỔI: Hàm cập nhật label
+        // CHANGE: Function to update labels
         function updateLanguageLabels() {
             const sourceLangText = sourceLanguageSelect.options[sourceLanguageSelect.selectedIndex].text;
             const targetLangText = targetLanguageSelect.options[targetLanguageSelect.selectedIndex].text;
@@ -306,7 +306,7 @@
             targetLanguageName.textContent = targetLangText;
         }
 
-        // Character counter (Giữ nguyên)
+        // Character counter (Keep unchanged)
         inputText.addEventListener('input', () => {
             const currentLength = inputText.value.length;
             if (currentLength > MAX_CHARS) {
@@ -319,22 +319,22 @@
             }
         });
 
-        // THAY ĐỔI: Direction selector (Sử dụng dropdowns)
+        // CHANGE: Direction selector (Using dropdowns)
         sourceLanguageSelect.addEventListener('change', updateLanguageLabels);
         targetLanguageSelect.addEventListener('change', updateLanguageLabels);
 
 
-        // THAY ĐỔI: Swap button
+        // CHANGE: Swap button
         swapButton.addEventListener('click', () => {
             const oldSourceVal = sourceLanguageSelect.value;
             const oldTargetVal = targetLanguageSelect.value;
 
-            // Chỉ swap nếu ngôn ngữ nguồn không phải là "auto"
+            // Only swap if source language is not "auto"
             if (oldSourceVal !== 'auto') {
                 sourceLanguageSelect.value = oldTargetVal;
                 targetLanguageSelect.value = oldSourceVal;
                 
-                // Cập nhật label ngay lập tức
+                // Update labels immediately
                 updateLanguageLabels();
             
                 // Swap text content
@@ -346,13 +346,13 @@
                 const event = new Event('input');
                 inputText.dispatchEvent(event);
             } else {
-                // Nếu là 'auto', chỉ đổi ngôn ngữ nguồn thành ngôn ngữ đích
+                // If 'auto', only change source language to target language
                 sourceLanguageSelect.value = oldTargetVal;
                 updateLanguageLabels();
             }
         });
 
-        // Error handling (Giữ nguyên)
+        // Error handling (Keep unchanged)
         function showError(message) {
             errorMessage.textContent = message;
             errorMessage.style.display = 'block';
@@ -361,7 +361,7 @@
             }, 5000);
         }
 
-        // API caller using Worker (Giữ nguyên)
+        // API caller using Worker (Keep unchanged)
         async function sendMessage(msg) {
             try {
                 const response = await fetch(workerUrl, {
@@ -380,7 +380,7 @@
                 }
 
                 const data = await response.json();
-                const text = data?.reply?.response || data?.reply || "Không có phản hồi từ AI";
+                const text = data?.reply?.response || data?.reply || "No response from AI";
                 return text;
             } catch (err) {
                 console.error("Error:", err);
@@ -388,7 +388,7 @@
             }
         }
 
-        // THAY ĐỔI: Translation function (logic prompt mới)
+        // CHANGE: Translation function (new prompt logic)
         translateButton.addEventListener('click', async () => {
             const textToTranslate = inputText.value.trim();
             
@@ -409,19 +409,19 @@
             translateButton.disabled = true;
             outputText.value = '';
 
-            // THAY ĐỔI: Logic tạo prompt động
+            // CHANGE: Dynamic prompt creation logic
             const sourceLangText = sourceLanguageSelect.value === 'auto' 
-                ? 'ngôn ngữ được phát hiện' 
+                ? 'detected language' 
                 : sourceLanguageSelect.options[sourceLanguageSelect.selectedIndex].text;
             
             const targetLangText = targetLanguageSelect.options[targetLanguageSelect.selectedIndex].text;
             
-            const prompt = `dịch văn bản này từ ${sourceLangText} sang ${targetLangText} với kiểu dịch dựa theo ngữ cảnh với ngôn ngữ tự nhiên và chỉ phản hồi kết quả, phàn hồi bằng chữ quốc gia đó, không giải thích gì thêm, chỉ có văn bản đã dịch, dịch: (${textToTranslate})`;
+            const prompt = `translate this text from ${sourceLangText} to ${targetLangText} with context-aware natural language translation style and only respond with the result, respond in that country's language, no additional explanation, only the translated text, translate: (${textToTranslate})`;
 
             try {
                 let translatedText = await sendMessage(prompt);
 
-                // Clean up (Giữ nguyên)
+                // Clean up (Keep unchanged)
                 translatedText = (translatedText || '').replace(/<think>.*?<\/think>/gs, '');
                 const quoteMatch = translatedText.match(/"([^"]*)"/);
                 if (quoteMatch) {
@@ -446,14 +446,14 @@
             }
         });
 
-        // Enter key to translate (Giữ nguyên)
+        // Enter key to translate (Keep unchanged)
         inputText.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' && e.ctrlKey) {
                 translateButton.click();
             }
         });
 
-        // Mobile optimizations (Giữ nguyên)
+        // Mobile optimizations (Keep unchanged)
         function isMobile() {
             return window.innerWidth <= 768;
         }
@@ -468,8 +468,8 @@
         }, false);
 
         if (isMobile()) {
-            // THAY ĐỔI: Cập nhật danh sách nút cảm ứng
-            const touchButtons = [translateButton, swapButton, copyButton]; // Bỏ 2 nút cũ
+            // CHANGE: Update touch button list
+            const touchButtons = [translateButton, swapButton, copyButton]; // Remove 2 old buttons
             touchButtons.forEach(button => {
                 button.addEventListener('touchstart', function(e) {
                     e.preventDefault(); 
@@ -499,7 +499,7 @@
             });
         }
         
-        // Hàm set --vh (Giữ nguyên)
+        // Function to set --vh (Keep unchanged)
         function setVh() {
             const vh = window.innerHeight * 0.01;
             document.documentElement.style.setProperty('--vh', `${vh}px`);
@@ -508,19 +508,19 @@
         window.addEventListener('resize', setVh);
         window.addEventListener('orientationchange', setVh);
         
-        // THAY ĐỔI: Hàm khởi tạo dropdowns
+        // CHANGE: Function to initialize dropdowns
         function initializeLanguageSelects() {
             const sourceFragment = document.createDocumentFragment();
             const targetFragment = document.createDocumentFragment();
 
             for (const [code, name] of Object.entries(supportedLanguages)) {
-                // Nguồn (có 'auto')
+                // Source (has 'auto')
                 const sourceOption = document.createElement('option');
                 sourceOption.value = code;
                 sourceOption.textContent = name;
                 sourceFragment.appendChild(sourceOption);
 
-                // Đích (không có 'auto')
+                // Target (no 'auto')
                 if (code !== 'auto') {
                     const targetOption = document.createElement('option');
                     targetOption.value = code;
@@ -536,11 +536,11 @@
             sourceLanguageSelect.value = 'vi';
             targetLanguageSelect.value = 'en';
 
-            // Cập nhật label lần đầu
+            // Update labels for the first time
             updateLanguageLabels();
         }
 
-        // Gọi hàm khởi tạo khi tải trang
+        // Call initialization function when page loads
         document.addEventListener('DOMContentLoaded', () => {
             initializeLanguageSelects();
             setVh();
