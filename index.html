@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/main.js" defer></script>
     <meta charset="UTF-8">
-    <!-- Viewport optimization for "App-like" feel -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="theme-color" content="#030712"> <!-- Darker background -->
+    <meta name="theme-color" content="#030712"> 
     <meta name="google" content="notranslate"> 
     <title>Text2 - Translate | LLM </title>
-    
-    <!-- SEO and OG Meta tags -->
     <meta name="description" content="Text2 - Translate is a smart translation tool powered by AI. Translate between Vietnamese and English with context-aware accuracy.">
     <link rel="manifest" href="/site.webmanifest">
     <link rel="icon" type="image/png" sizes="32x32" href="https://translate.text2.click/favicon-32x32.png">
@@ -41,75 +40,13 @@
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Inter font -->
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- CSS optimized for "App-like" experience -->
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            color-scheme: dark;
-            /* Prevent "bounce" overscroll on mobile */
-            overflow: hidden; 
-        }
-        
-        /* Animation keyframe (kept from original file) */
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(15px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Copy button when clicked (JS will add 'copied' class) */
-        .copy-button.copied {
-            @apply !bg-gradient-to-r !from-green-500 !to-emerald-500 shadow-lg;
-        }
-
-        /* Language selection (JS will add 'active' class) */
-        /* THIS CSS IS NO LONGER USED FOR BUTTONS, BUT CAN BE REUSED FOR SELECT */
-        .language-select {
-            @apply w-full flex-1 px-4 py-3 rounded-lg text-sm md:text-base font-medium text-gray-300 bg-gray-800/60 border border-gray-700/50 hover:bg-gray-700/50 transition-all cursor-pointer text-center appearance-none;
-            /* Custom dropdown arrow */
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
-            background-position: right 0.75rem center;
-            background-repeat: no-repeat;
-            background-size: 1.25em 1.25em;
-            padding-right: 2.5rem; /* Add padding so arrow doesn't overlap text */
-        }
-        .language-select:focus {
-            @apply ring-2 ring-blue-500/50 border-blue-600 outline-none;
-        }
-
-
-        /* Character counter (JS will add 'limit-reached' class) */
-        .char-counter.limit-reached {
-            @apply !text-red-400 !bg-red-900/30;
-        }
-
-        /* Prevent iOS auto-zoom when focusing on textarea */
-        @media (max-width: 768px) {
-            textarea:focus, input:focus, select:focus {
-                font-size: 16px !important;
-            }
-        }
-        
-        /* Customize scrollbar for more "app-like" feel */
-        .main-content-scrollable::-webkit-scrollbar {
-            width: 6px;
-        }
-        .main-content-scrollable::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        .main-content-scrollable::-webkit-scrollbar-thumb {
-            background-color: rgba(107, 114, 128, 0.5); /* gray-500/50 */
-            border-radius: 20px;
-        }
-    </style>
 </head>
 
-<!-- Full-height flex-col layout for body -->
 <body class="bg-gray-950 text-gray-200 flex flex-col h-[calc(var(--vh,1vh)*100)]">
 
-    <!-- Header (App Bar) - Fixed -->
     <div class="header flex justify-between items-center p-4 md:p-5 border-b border-gray-700/50 bg-gray-900/80 backdrop-blur-lg flex-shrink-0 z-10 shadow-md">
         <div class="logo-section flex items-center gap-3">
             <img src="https://translate.text2.click/favicon.ico" alt="Text2.click Logo" class="logo w-9 h-9 md:w-10 md:h-10 rounded-lg shadow-lg">
@@ -120,7 +57,6 @@
         <div class="header-right text-xs text-gray-500 opacity-90">&nbsp;</div>
     </div>
 
-    <!-- Main Content (Scrollable) -->
     <div class="main-content-scrollable flex-1 overflow-y-auto p-4 md:p-8" style="animation: slideUp 0.6s ease-out;">
         
         <!-- Translation Grid -->
@@ -131,7 +67,6 @@
                 <label for="inputText" class="text-area-label flex justify-between items-center text-sm font-semibold text-gray-300">
                     <span id="sourceLanguageLabel" class="flex items-center gap-2">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path></svg>
-                        <!-- CHANGE: Add span ID for dynamic update -->
                         <span id="sourceLanguageName">Vietnamese</span>
                     </span>
                 </label>
@@ -144,7 +79,6 @@
                 <label for="outputText" class="text-area-label flex justify-between items-center text-sm font-semibold text-gray-300">
                     <span id="targetLanguageLabel" class="flex items-center gap-2">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        <!-- CHANGE: Add span ID for dynamic update -->
                         <span id="targetLanguageName">English</span>
                     </span>
                     <button id="copyButton" class="copy-button flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md hover:scale-105 active:scale-95 transition-all" title="Copy result">
@@ -159,7 +93,6 @@
         <div class="controls-section flex flex-col gap-4 md:gap-5 mt-6 md:mt-8">
             
             <div class="flex flex-col sm:flex-row items-center gap-3">
-                <!-- CHANGE: Language Selection with Dropdowns -->
                 <div class="direction-selector flex-grow w-full flex flex-col md:flex-row gap-3 items-center p-1 bg-gray-900/30 rounded-xl">
                     <!-- Source Language Dropdown -->
                     <select id="sourceLanguageSelect" class="language-select">
@@ -179,11 +112,9 @@
 
             </div>
 
-            <!-- Error Message (Keep unchanged) -->
             <div id="errorMessage" class="error-message p-3 bg-red-900/40 border border-red-700/50 text-red-300 text-sm rounded-lg text-center hidden"></div>
         </div>
 
-        <!-- Features (Keep unchanged) -->
         
         <!-- Add safe padding at the end -->
         <div class="h-8 md:h-12 flex-shrink-0"></div>
@@ -192,7 +123,6 @@
 
     <!-- Action Bar Footer - Fixed -->
     <div class="footer-action-bar p-3 md:p-4 bg-gray-900/80 backdrop-blur-lg border-t border-gray-700/50 flex-shrink-0 z-10 shadow-inner">
-        <!-- Translate Button (Keep unchanged) -->
         <button id="translateButton" class="translate-button flex items-center justify-center gap-3 w-full h-12 md:h-14 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:scale-[0.99] transition-all disabled:opacity-60 disabled:cursor-not-allowed disabled:transform-none">
             <span id="translateIcon" class="flex items-center justify-center">
                 <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
@@ -201,352 +131,6 @@
             <div id="loadingSpinner" class="loading-spinner w-6 h-6 border-2 border-white/20 border-t-white rounded-full animate-spin hidden"></div>
         </button>
     </div>
-
-
-    <!-- JAVASCRIPT (UPDATED LOGIC) -->
-    <script>
-        // DOM Elements
-        const inputText = document.getElementById('inputText');
-        const outputText = document.getElementById('outputText');
-        const translateButton = document.getElementById('translateButton');
-        const loadingSpinner = document.getElementById('loadingSpinner');
-        const errorMessage = document.getElementById('errorMessage');
-        const charCount = document.getElementById('charCount');
-        const buttonText = document.getElementById('buttonText');
-        const translateIcon = document.getElementById('translateIcon'); 
-        const swapButton = document.getElementById('swapButton');
-        const copyButton = document.getElementById('copyButton');
-        const sourceLanguageLabel = document.getElementById('sourceLanguageLabel');
-        const targetLanguageLabel = document.getElementById('targetLanguageLabel');
-        
-        // CHANGE: New DOM elements
-        const sourceLanguageSelect = document.getElementById('sourceLanguageSelect');
-        const targetLanguageSelect = document.getElementById('targetLanguageSelect');
-        const sourceLanguageName = document.getElementById('sourceLanguageName');
-        const targetLanguageName = document.getElementById('targetLanguageName');
-
-        // CHANGE: List of languages (expandable)
-        const supportedLanguages = {
-            'auto': 'Auto Detect',
-            'vi': 'Vietnamese',
-            'en': 'English',
-            'zh': 'Chinese (Simplified)',
-            'ja': 'Japanese',
-            'ko': 'Korean',
-            'fr': 'French',
-            'de': 'German',
-            'es': 'Spanish',
-            'ru': 'Russian',
-            'pt': 'Portuguese',
-            'it': 'Italian',
-            'hi': 'Hindi',
-            'ar': 'Arabic',
-            'tr': 'Turkish',
-            'nl': 'Dutch',
-            'pl': 'Polish',
-            'sv': 'Swedish',
-            'th': 'Thai',
-            'id': 'Indonesian',
-            'ms': 'Malay',
-            'el': 'Greek',
-            'cs': 'Czech',
-            'da': 'Danish',
-            'fi': 'Finnish',
-            'hu': 'Hungarian',
-            'no': 'Norwegian',
-            'ro': 'Romanian',
-            'sk': 'Slovak',
-            'uk': 'Ukrainian',
-            'he': 'Hebrew',
-        };
-
-
-        // API Key
-        const workerUrl = "https://cloudflare-llm.text2team.workers.dev"; 
-        const MAX_CHARS = 500;
-
-        // Copy functionality (Keep unchanged)
-        copyButton.addEventListener('click', async () => {
-            const textToCopy = outputText.value.trim();
-            if (!textToCopy) {
-                showError('No text to copy. Please translate something first.');
-                return;
-            }
-            try {
-                await navigator.clipboard.writeText(textToCopy);
-                copyButton.classList.add('copied');
-                copyButton.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`;
-                setTimeout(() => {
-                    copyButton.classList.remove('copied');
-                    copyButton.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>`;
-                }, 2000);
-            } catch (err) {
-                // Fallback
-                const textArea = document.createElement('textarea');
-                textArea.value = textToCopy;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
-                copyButton.classList.add('copied');
-                copyButton.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`;
-                setTimeout(() => {
-                    copyButton.classList.remove('copied');
-                    copyButton.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>`;
-                }, 2000);
-            }
-        });
-
-        // CHANGE: Function to update labels
-        function updateLanguageLabels() {
-            const sourceLangText = sourceLanguageSelect.options[sourceLanguageSelect.selectedIndex].text;
-            const targetLangText = targetLanguageSelect.options[targetLanguageSelect.selectedIndex].text;
-            
-            sourceLanguageName.textContent = sourceLangText;
-            targetLanguageName.textContent = targetLangText;
-        }
-
-        // Character counter (Keep unchanged)
-        inputText.addEventListener('input', () => {
-            const currentLength = inputText.value.length;
-            if (currentLength > MAX_CHARS) {
-                inputText.value = inputText.value.substring(0, MAX_CHARS);
-                charCount.textContent = `${MAX_CHARS}/${MAX_CHARS} characters (limit reached)`;
-                charCount.classList.add('limit-reached');
-            } else {
-                charCount.textContent = `${currentLength}/${MAX_CHARS} characters`;
-                charCount.classList.remove('limit-reached');
-            }
-        });
-
-        // CHANGE: Direction selector (Using dropdowns)
-        sourceLanguageSelect.addEventListener('change', updateLanguageLabels);
-        targetLanguageSelect.addEventListener('change', updateLanguageLabels);
-
-
-        // CHANGE: Swap button
-        swapButton.addEventListener('click', () => {
-            const oldSourceVal = sourceLanguageSelect.value;
-            const oldTargetVal = targetLanguageSelect.value;
-
-            // Only swap if source language is not "auto"
-            if (oldSourceVal !== 'auto') {
-                sourceLanguageSelect.value = oldTargetVal;
-                targetLanguageSelect.value = oldSourceVal;
-                
-                // Update labels immediately
-                updateLanguageLabels();
-            
-                // Swap text content
-                const tempText = inputText.value;
-                inputText.value = outputText.value;
-                outputText.value = tempText;
-                
-                // Update character count
-                const event = new Event('input');
-                inputText.dispatchEvent(event);
-            } else {
-                // If 'auto', only change source language to target language
-                sourceLanguageSelect.value = oldTargetVal;
-                updateLanguageLabels();
-            }
-        });
-
-        // Error handling (Keep unchanged)
-        function showError(message) {
-            errorMessage.textContent = message;
-            errorMessage.style.display = 'block';
-            setTimeout(() => {
-                errorMessage.style.display = 'none';
-            }, 5000);
-        }
-
-        // API caller using Worker (Keep unchanged)
-        async function sendMessage(msg) {
-            try {
-                const response = await fetch(workerUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        prompt: msg
-                    })
-                });
-
-                if (!response.ok) {
-                    const errText = await response.text();
-                    throw new Error(`HTTP error ${response.status}: ${errText}`);
-                }
-
-                const data = await response.json();
-                const text = data?.reply?.response || data?.reply || "No response from AI";
-                return text;
-            } catch (err) {
-                console.error("Error:", err);
-                throw new Error(`API call failed: ${err.message}`);
-            }
-        }
-
-        // CHANGE: Translation function (new prompt logic)
-        translateButton.addEventListener('click', async () => {
-            const textToTranslate = inputText.value.trim();
-            
-            if (!textToTranslate) {
-                showError('Please enter text you want to translate.');
-                return;
-            }
-
-            if (textToTranslate.length > MAX_CHARS) {
-                showError(`Text is too long. Please enter maximum ${MAX_CHARS} characters.`);
-                return;
-            }
-
-            // Show loading state
-            loadingSpinner.style.display = 'block';
-            buttonText.style.display = 'none'; 
-            translateIcon.style.display = 'none'; 
-            translateButton.disabled = true;
-            outputText.value = '';
-
-            // CHANGE: Dynamic prompt creation logic
-            const sourceLangText = sourceLanguageSelect.value === 'auto' 
-                ? 'detected language' 
-                : sourceLanguageSelect.options[sourceLanguageSelect.selectedIndex].text;
-            
-            const targetLangText = targetLanguageSelect.options[targetLanguageSelect.selectedIndex].text;
-            
-            const prompt = `translate this text from ${sourceLangText} to ${targetLangText} with context-aware natural language translation style and only respond with the result, respond in that country's language, no additional explanation, only the translated text, translate: (${textToTranslate})`;
-
-            try {
-                let translatedText = await sendMessage(prompt);
-
-                // Clean up (Keep unchanged)
-                translatedText = (translatedText || '').replace(/<think>.*?<\/think>/gs, '');
-                const quoteMatch = translatedText.match(/"([^"]*)"/);
-                if (quoteMatch) {
-                    translatedText = quoteMatch[1];
-                }
-                translatedText = translatedText.replace(/\n\s*\n/g, '\n').trim();
-
-                if (!translatedText) {
-                    showError('Unable to get translation result. Please try again.');
-                }
-                outputText.value = translatedText;
-
-            } catch (error) {
-                console.error('Error calling translation API:', error);
-                showError(`An error occurred: ${error.message}. Please try again.`);
-            } finally {
-                // Reset loading state
-                loadingSpinner.style.display = 'none';
-                buttonText.style.display = 'block'; 
-                translateIcon.style.display = 'block'; 
-                translateButton.disabled = false;
-            }
-        });
-
-        // Enter key to translate (Keep unchanged)
-        inputText.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' && e.ctrlKey) {
-                translateButton.click();
-            }
-        });
-
-        // Mobile optimizations (Keep unchanged)
-        function isMobile() {
-            return window.innerWidth <= 768;
-        }
-
-        let lastTouchEnd = 0;
-        document.addEventListener('touchend', function (event) {
-            const now = (new Date()).getTime();
-            if (now - lastTouchEnd <= 300) {
-                event.preventDefault();
-            }
-            lastTouchEnd = now;
-        }, false);
-
-        if (isMobile()) {
-            // CHANGE: Update touch button list
-            const touchButtons = [translateButton, swapButton, copyButton]; // Remove 2 old buttons
-            touchButtons.forEach(button => {
-                button.addEventListener('touchstart', function(e) {
-                    e.preventDefault(); 
-                    this.style.transform = 'scale(0.98)';
-                }, { passive: false });
-                
-                button.addEventListener('touchend', function() {
-                    this.style.transform = '';
-                    this.click(); 
-                });
-                
-                button.addEventListener('touchcancel', function() {
-                    this.style.transform = '';
-                });
-            });
-
-            inputText.addEventListener('focus', function() {
-                setTimeout(() => {
-                    window.scrollTo(0, 0); 
-                }, 300);
-            });
-
-            inputText.addEventListener('focus', function() {
-                if (isMobile()) {
-                    this.style.fontSize = '16px';
-                }
-            });
-        }
-        
-        // Function to set --vh (Keep unchanged)
-        function setVh() {
-            const vh = window.innerHeight * 0.01;
-            document.documentElement.style.setProperty('--vh', `${vh}px`);
-        }
-
-        window.addEventListener('resize', setVh);
-        window.addEventListener('orientationchange', setVh);
-        
-        // CHANGE: Function to initialize dropdowns
-        function initializeLanguageSelects() {
-            const sourceFragment = document.createDocumentFragment();
-            const targetFragment = document.createDocumentFragment();
-
-            for (const [code, name] of Object.entries(supportedLanguages)) {
-                // Source (has 'auto')
-                const sourceOption = document.createElement('option');
-                sourceOption.value = code;
-                sourceOption.textContent = name;
-                sourceFragment.appendChild(sourceOption);
-
-                // Target (no 'auto')
-                if (code !== 'auto') {
-                    const targetOption = document.createElement('option');
-                    targetOption.value = code;
-                    targetOption.textContent = name;
-                    targetFragment.appendChild(targetOption);
-                }
-            }
-
-            sourceLanguageSelect.appendChild(sourceFragment);
-            targetLanguageSelect.appendChild(targetFragment);
-
-            // Set defaults
-            sourceLanguageSelect.value = 'vi';
-            targetLanguageSelect.value = 'en';
-
-            // Update labels for the first time
-            updateLanguageLabels();
-        }
-
-        // Call initialization function when page loads
-        document.addEventListener('DOMContentLoaded', () => {
-            initializeLanguageSelects();
-            setVh();
-        });
-        
-    </script>
 </body>
 </html>
 
