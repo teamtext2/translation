@@ -216,10 +216,6 @@ translateButton.addEventListener('click', async () => {
 
         // Clean up (Keep unchanged)
         translatedText = (translatedText || '').replace(/<think>.*?<\/think>/gs, '');
-        const quoteMatch = translatedText.match(/"([^"]*)"/);
-        if (quoteMatch) {
-            translatedText = quoteMatch[1];
-        }
         translatedText = translatedText.replace(/\n\s*\n/g, '\n').trim();
 
         if (!translatedText) {
@@ -338,3 +334,4 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeLanguageSelects();
     setVh();
 });
+
