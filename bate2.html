@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/main.js" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#030712"> 
+    <meta name="google" content="notranslate"> 
+    <title>Text2 - Translate | LLM </title>
+    <meta name="description" content="Text2 - Translate is a smart translation tool powered by AI. Translate between Vietnamese and English with context-aware accuracy.">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://translate.text2.pro/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://translate.text2.pro/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://translate.text2.pro/apple-touch-icon.png">
+
+  <!-- Google tag (gtag.js) - GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ABCDEFG123"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-6J85STMJ14');
+</script>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1722731267767270"
+     crossorigin="anonymous"></script>
+    <script async src="https://www.googlesyndication.com/gtag/js?id=G-6J85STMJ14"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-6J85STMJ14');
+    </script>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+</head>
+
+<body class="bg-gray-950 text-gray-200 flex flex-col h-[calc(var(--vh,1vh)*100)]">
+
+    <div class="header flex justify-between items-center p-4 md:p-5 border-b border-gray-700/50 bg-gray-900/80 backdrop-blur-lg flex-shrink-0 z-10 shadow-md">
+        <div class="logo-section flex items-center gap-3">
+            <img src="https://translate.text2.pro/favicon.ico" alt="Text2.pro Logo" class="logo w-9 h-9 md:w-10 md:h-10 rounded-lg shadow-lg">
+            <div>
+                <div class="brand-name text-base md:text-lg font-extrabold uppercase tracking-wider text-white">Text2 Translate</div>
+            </div>
+        </div>
+        <div class="header-right text-xs text-gray-500 opacity-90">&nbsp;</div>
+    </div>
+
+    <div class="main-content-scrollable flex-1 overflow-y-auto p-4 md:p-8" style="animation: slideUp 0.6s ease-out;">
+        
+        <!-- Translation Grid -->
+        <div class="translation-grid grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 items-start">
+            
+            <!-- Input Column -->
+            <div class="text-area-container relative flex flex-col gap-3 h-full">
+                <label for="inputText" class="text-area-label flex justify-between items-center text-sm font-semibold text-gray-300">
+                    <span id="sourceLanguageLabel" class="flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path></svg>
+                        <span id="sourceLanguageName">Vietnamese</span>
+                    </span>
+                </label>
+                <textarea id="inputText" class="text-area w-full p-4 bg-gray-900/60 border-2 border-gray-700/80 rounded-xl text-gray-100 text-base leading-relaxed resize-none focus:outline-none focus:ring-4 focus:ring-blue-500/30 focus:border-blue-500 transition-all duration-300 flex-grow min-h-[200px] md:min-h-[300px]" placeholder="Enter text to translate..."></textarea>
+                <div id="charCount" class="char-counter absolute bottom-3 left-4 text-xs text-gray-500 bg-gray-800/80 px-2 py-1 rounded-md border border-gray-700/50 transition-colors">0/500 characters</div>
+            </div>
+
+            <!-- Output Column -->
+            <div class="text-area-container relative flex flex-col gap-3 h-full">
+                <label for="outputText" class="text-area-label flex justify-between items-center text-sm font-semibold text-gray-300">
+                    <span id="targetLanguageLabel" class="flex items-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <span id="targetLanguageName">English</span>
+                    </span>
+                    <button id="copyButton" class="copy-button flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md hover:scale-105 active:scale-95 transition-all" title="Copy result">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                    </button>
+                </label>
+                <textarea id="outputText" class="text-area w-full p-4 bg-gray-800/70 border-2 border-gray-700/80 rounded-xl text-gray-300 text-base leading-relaxed resize-none focus:outline-none flex-grow min-h-[200px] md:min-h-[300px]" readonly placeholder="Translation result will appear here..."></textarea>
+            </div>
+        </div>
+
+        <!-- Controls Section -->
+        <div class="controls-section flex flex-col gap-4 md:gap-5 mt-6 md:mt-8">
+            
+            <div class="flex flex-col sm:flex-row items-center gap-3">
+                <div class="direction-selector flex-grow w-full flex flex-col md:flex-row gap-3 items-center p-1 bg-gray-900/30 rounded-xl">
+                    <!-- Source Language Dropdown -->
+                    <select id="sourceLanguageSelect" class="language-select">
+                        <!-- JS will insert options here -->
+                    </select>
+                    
+                    <!-- Swap Button (Keep unchanged) -->
+                    <button id="swapButton" class="swap-button flex-shrink-0 flex items-center justify-center w-full sm:w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg text-white shadow-lg hover:scale-110 active:scale-95 transition-all" title="Swap languages">
+                        <svg class="swap-icon w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+                    </button>
+
+                    <!-- Target Language Dropdown -->
+                    <select id="targetLanguageSelect" class="language-select">
+                        <!-- JS will insert options here -->
+                    </select>
+                </div>
+
+            </div>
+
+            <div id="errorMessage" class="error-message p-3 bg-red-900/40 border border-red-700/50 text-red-300 text-sm rounded-lg text-center hidden"></div>
+        </div>
+        <!-- Add safe padding at the end -->
+        <div class="h-8 md:h-12 flex-shrink-0"></div>
+
+    </div>
+
+    <!-- Action Bar Footer - Fixed -->
+    <div class="footer-action-bar p-3 md:p-4 bg-gray-900/80 backdrop-blur-lg border-t border-gray-700/50 flex-shrink-0 z-10 shadow-inner">
+        <button id="translateButton" class="translate-button flex items-center justify-center gap-3 w-full h-12 md:h-14 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg hover:shadow-xl hover:-translate-y-0.5 active:scale-[0.99] transition-all disabled:opacity-60 disabled:cursor-not-allowed disabled:transform-none">
+            <span id="translateIcon" class="flex items-center justify-center">
+                <svg class="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+            </span>
+            <span id="buttonText" class="text-base md:text-lg font-semibold">Translate</span>
+            <div id="loadingSpinner" class="loading-spinner w-6 h-6 border-2 border-white/20 border-t-white rounded-full animate-spin hidden"></div>
+        </button>
+    </div>
+</body>
+</html>
+
