@@ -1,0 +1,57 @@
+body {
+    font-family: 'Inter', sans-serif;
+    color-scheme: dark;
+    /* Prevent "bounce" overscroll on mobile */
+    overflow: hidden; 
+}
+
+/* Animation keyframe (kept from original file) */
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Copy button when clicked (JS will add 'copied' class) */
+.copy-button.copied {
+    @apply !bg-gradient-to-r !from-green-500 !to-emerald-500 shadow-lg;
+}
+
+/* Language selection (JS will add 'active' class) */
+/* THIS CSS IS NO LONGER USED FOR BUTTONS, BUT CAN BE REUSED FOR SELECT */
+.language-select {
+    @apply w-full flex-1 px-4 py-3 rounded-lg text-sm md:text-base font-medium text-gray-300 bg-gray-800/60 border border-gray-700/50 hover:bg-gray-700/50 transition-all cursor-pointer text-center appearance-none;
+    /* Custom dropdown arrow */
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.75rem center;
+    background-repeat: no-repeat;
+    background-size: 1.25em 1.25em;
+    padding-right: 2.5rem; /* Add padding so arrow doesn't overlap text */
+}
+.language-select:focus {
+    @apply ring-2 ring-blue-500/50 border-blue-600 outline-none;
+}
+
+
+/* Character counter (JS will add 'limit-reached' class) */
+.char-counter.limit-reached {
+    @apply !text-red-400 !bg-red-900/30;
+}
+
+/* Prevent iOS auto-zoom when focusing on textarea */
+@media (max-width: 768px) {
+    textarea:focus, input:focus, select:focus {
+        font-size: 16px !important;
+    }
+}
+
+/* Customize scrollbar for more "app-like" feel */
+.main-content-scrollable::-webkit-scrollbar {
+    width: 6px;
+}
+.main-content-scrollable::-webkit-scrollbar-track {
+    background: transparent;
+}
+.main-content-scrollable::-webkit-scrollbar-thumb {
+    background-color: rgba(107, 114, 128, 0.5); /* gray-500/50 */
+    border-radius: 20px;
+}
